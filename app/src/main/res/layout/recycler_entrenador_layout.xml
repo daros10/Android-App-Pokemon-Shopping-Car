@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relative_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+
+        <TextView
+            android:id="@+id/txtNombreEntrenador"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
+
+        <TextView
+            android:id="@+id/txtApellidoEntrenador"
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:layout_below="@+id/txtNombreEntrenador" />
+
+        <TextView
+            android:id="@+id/txtFechaNacimientoEntrenador"
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:layout_below="@+id/txtApellidoEntrenador" />
+
+        <Button
+            android:id="@+id/btnDetallesEntrenado"
+            android:layout_width="173dp"
+            android:layout_height="70dp"
+            android:layout_below="@+id/txtNombreEntrenador"
+            android:layout_toEndOf="@+id/txtApellidoEntrenador"
+            android:text="@string/detalles" />
+
+</RelativeLayout>

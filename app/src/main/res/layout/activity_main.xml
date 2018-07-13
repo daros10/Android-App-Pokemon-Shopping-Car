@@ -25,7 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:entries="@array/roles" />
+            android:entries="@array/roles"
+            android:gravity="center" />
 
         <EditText
             android:id="@+id/txtUsername"
@@ -33,6 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:backgroundTint="@color/colorPrimary"
+            android:gravity="center"
             android:hint="@string/username"
             android:inputType="text" />
 
@@ -42,6 +45,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:backgroundTint="@color/colorPrimary"
+            android:gravity="center"
             android:hint="@string/password"
             android:inputType="textPassword" />
     </LinearLayout>
@@ -67,7 +72,9 @@
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/login" />
+            android:background="@color/colorPrimary"
+            android:text="@string/login"
+            android:textColor="@android:color/background_light" />
 
     </LinearLayout>
 
@@ -79,6 +86,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
+        android:gravity="center"
         android:text="@string/inicia_sesi_n"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayoutDatos"
