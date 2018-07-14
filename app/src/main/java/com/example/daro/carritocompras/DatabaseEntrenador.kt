@@ -5,8 +5,7 @@ import android.util.Log
 import com.beust.klaxon.JsonArray
 import com.beust.klaxon.JsonObject
 import com.beust.klaxon.Parser
-import com.github.kittinunf.fuel.httpGet
-import com.github.kittinunf.fuel.httpPost
+import com.github.kittinunf.fuel.*
 
 class DatabaseEntrenador{
 
@@ -14,6 +13,20 @@ class DatabaseEntrenador{
 
         fun insertarEntrenador(entrenador:Entrenador){
             "http://192.168.0.3:1337/Entrenador".httpPost(listOf("nombre" to entrenador.nombre, "apellido" to entrenador.apellido, "fechaNacimiento" to entrenador.fechaNacimiento, "medallas" to entrenador.numeroMedallas, "campeonActual" to entrenador.campeonActual))
+                    .responseString { request, _, result ->
+                        Log.d("http-ejemplo", request.toString())
+                    }
+        }
+
+        fun eliminarEntrenador(id: Int) {
+            "http://192.168.0.3:1337/Entrenador/$id".httpDelete()
+                    .responseString { request, response, result ->
+                        Log.d("http-ejemplo", request.toString())
+                    }
+        }
+
+        fun actualizarEntrenador(entrenador: Entrenador) {
+            "http://192.168.0.3:1337/Entrenador/${entrenador.id}".httpPut(listOf("nombre" to entrenador.nombre, "apellido" to entrenador.apellido, "fechaNacimiento" to entrenador.fechaNacimiento, "medallas" to entrenador.numeroMedallas, "campeonActual" to entrenador.campeonActual))
                     .responseString { request, _, result ->
                         Log.d("http-ejemplo", request.toString())
                     }

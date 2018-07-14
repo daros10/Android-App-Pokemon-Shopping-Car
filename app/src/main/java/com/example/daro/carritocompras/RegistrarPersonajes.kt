@@ -19,6 +19,7 @@ class RegistrarPersonajes : AppCompatActivity() {
 
 
         rol = intent.getStringExtra("valorRol")
+        intent.putExtra("valueRol",rol)
 
         //Toast.makeText(this,"Rol es $rol", Toast.LENGTH_SHORT).show()
 
@@ -47,6 +48,7 @@ class RegistrarPersonajes : AppCompatActivity() {
 
     fun irEntrenadorActivity(){
         val intent = Intent(this, EntrenadorActivity::class.java)
+        intent.putExtra("tipo", "Create")
         startActivity(intent)
     }
 

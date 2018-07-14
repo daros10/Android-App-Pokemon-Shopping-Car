@@ -17,6 +17,8 @@
     <string name="guardar">GUARDAR</string>
     <string name="detalles">DETALLES</string>
     <string name="creacion_pokemon">Creacion Pokemon</string>
+    <string name="editar">Editar</string>
+    <string name="eliminar">Eliminar</string>
     <string-array name="roles">
         <item>VENDEDOR</item>
         <item>CLIENTE</item>

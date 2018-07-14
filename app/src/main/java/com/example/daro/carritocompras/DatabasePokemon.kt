@@ -5,14 +5,30 @@ import android.util.Log
 import com.beust.klaxon.JsonArray
 import com.beust.klaxon.JsonObject
 import com.beust.klaxon.Parser
+import com.github.kittinunf.fuel.httpDelete
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
+import com.github.kittinunf.fuel.httpPut
 
 class DatabasePokemon{
     companion object {
 
         fun insertarPokemon(pokemon:Pokemon){
             "http://192.168.0.3:1337/Pokemon".httpPost(listOf("numero" to pokemon.numeroPokemon, "nombre" to pokemon.nombre, "poderUno" to pokemon.poderUno, "poderDos" to pokemon.poderDos, "fechaCaptura" to pokemon.fechaCaptura,"nivel" to pokemon.nivel,"entrenadorId" to pokemon.idEntrenador ))
+                    .responseString { request, _, result ->
+                        Log.d("http-ejemplo", request.toString())
+                    }
+        }
+
+        fun eliminarPokemon(id: Int) {
+            "http://192.168.0.3:1337/Pokemon/$id".httpDelete()
+                    .responseString { request, response, result ->
+                        Log.d("http-ejemplo", request.toString())
+                    }
+        }
+
+        fun actualizarPokemon(pokemon: Pokemon) {
+            "http://192.168.0.3:1337/Pokemon/${pokemon.id}".httpPut(listOf("numero" to pokemon.numeroPokemon, "nombre" to pokemon.nombre, "poderUno" to pokemon.poderUno, "poderDos" to pokemon.poderDos, "fechaCaptura" to pokemon.fechaCaptura, "nivel" to pokemon.nivel))
                     .responseString { request, _, result ->
                         Log.d("http-ejemplo", request.toString())
                     }
