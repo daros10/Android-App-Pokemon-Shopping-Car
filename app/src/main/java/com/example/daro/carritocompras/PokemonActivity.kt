@@ -5,20 +5,12 @@ import android.graphics.Bitmap
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_pokemon.*
-import android.R.attr.data
-import android.app.Activity
-import android.net.Uri
-import android.os.Environment
-import android.support.v4.content.FileProvider
-import kotlinx.android.synthetic.main.activity_detalles_pokemon.*
-import kotlinx.android.synthetic.main.activity_entrenador.*
-import java.io.File
-import java.text.SimpleDateFormat
-import java.util.*
+import java.io.ByteArrayOutputStream
+import android.graphics.BitmapFactory
+import android.util.Base64
 
 
 class PokemonActivity : AppCompatActivity() {
@@ -27,6 +19,8 @@ class PokemonActivity : AppCompatActivity() {
     var idEntrenador: Int = 0
     private lateinit var imageBitmap: Bitmap
     var tipo = false
+    lateinit var myBase64Image:String
+    lateinit var myBitmapAgain:Bitmap
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,13 +64,15 @@ class PokemonActivity : AppCompatActivity() {
         var poderDos = txtPoderDosPokemon.text.toString()
         var fechaCaptura = txtFechaCPokemon.text.toString()
         var nivel = txtNivelPokemon.text.toString().toInt()
+        var imagenPokemon = myBase64Image
 
         if (!tipo){
-            var pokemon = Pokemon(0,numero,nombre,poderUno,poderDos,fechaCaptura,nivel,idEntrenador,0,0)
+            var pokemon = Pokemon(0,numero,nombre,poderUno,poderDos,fechaCaptura,nivel,imagenPokemon,idEntrenador,0,0)
             DatabasePokemon.insertarPokemon(pokemon)
+            //Toast.makeText(this,"SAVEDDD: $imagenPokemon", Toast.LENGTH_SHORT).show()
 
         }else{
-            var pokemon = Pokemon(pokemon?.id!!,numero,nombre,poderUno,poderDos,fechaCaptura,nivel,idEntrenador,0,0)
+            var pokemon = Pokemon(pokemon?.id!!,numero,nombre,poderUno,poderDos,fechaCaptura,nivel,imagenPokemon,idEntrenador,0,0)
             DatabasePokemon.actualizarPokemon(pokemon)
         }
 
@@ -87,61 +83,42 @@ class PokemonActivity : AppCompatActivity() {
     val REQUEST_IMAGE_CAPTURE = 1
 
     private fun tomarFoto() {
-        /*val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (takePictureIntent.resolveActivity(packageManager) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-        }*/
-
-        val archivoImagen = crearArchivo(
-                "JPEG_",
-                Environment.DIRECTORY_PICTURES,
-                ".jpg")
-
-        enviarIntentFoto(archivoImagen)
-    }
-
-    private fun crearArchivo(prefijo: String, directorio: String, extension: String): File {
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-
-        val imageFileName = prefijo + timeStamp + "_"
-        val storageDir = getExternalFilesDir(directorio)
-
-        return File.createTempFile(imageFileName, /* prefix */extension, /* suffix */storageDir      /* directory */
-        )
-    }
-
-    private fun enviarIntentFoto(archivo: File) {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-
-        val photoURI: Uri = FileProvider.getUriForFile(this, "com.example.daro.carritocompras.fileprovider", archivo)
-
-        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-
         if (takePictureIntent.resolveActivity(packageManager) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
         }
 
     }
+
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-       /* super.onActivityResult(requestCode, resultCode, data)
+       super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             val extras = data.extras
             imageBitmap = extras!!.get("data") as Bitmap
-            imageViewPokemon.setImageBitmap(imageBitmap)
-        }*/
-        when (requestCode) {
-            REQUEST_IMAGE_CAPTURE-> {
-                if (resultCode == Activity.RESULT_OK) {
-                    val extras = data.extras
-                    val fotoActualBitmap = extras!!.get("data") as Bitmap
-                    imageViewPokemon.setImageBitmap(fotoActualBitmap)
 
-                }
-            }
+            myBase64Image = encodeToBase64(imageBitmap, Bitmap.CompressFormat.JPEG, 100)
+            myBitmapAgain = decodeBase64(myBase64Image)
+
+            imageViewPokemon.setImageBitmap(myBitmapAgain)
+
+            //Toast.makeText(this,"Dentro de camara: $myBase64Image", Toast.LENGTH_SHORT).show()
+
         }
 
+    }
+
+    fun encodeToBase64(image: Bitmap, compressFormat: Bitmap.CompressFormat, quality: Int): String {
+        val byteArrayOS = ByteArrayOutputStream()
+        image.compress(compressFormat, quality, byteArrayOS)
+        return android.util.Base64.encodeToString(byteArrayOS.toByteArray(), android.util.Base64.DEFAULT)
+
+    }
+
+    fun decodeBase64(input: String): Bitmap {
+        val decodedBytes =  Base64.decode(input,0)
+        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
     }
 
 

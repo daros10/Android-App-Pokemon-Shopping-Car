@@ -13,20 +13,24 @@ class RegistrarPersonajes : AppCompatActivity() {
 
     lateinit var rol:String
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registrar_personajes)
 
 
         rol = intent.getStringExtra("valorRol")
-        intent.putExtra("valueRol",rol)
 
         //Toast.makeText(this,"Rol es $rol", Toast.LENGTH_SHORT).show()
 
         if (rol.equals("VENDEDOR",true)){
             //Toast.makeText(this,"Deshabilito boton", Toast.LENGTH_SHORT).show()
             btnBuscarEntrenador.visibility = View.INVISIBLE
+
         }else if (rol.equals("DELIVERY",true)){
+            btnBuscarEntrenador.visibility = View.INVISIBLE
+            btnCrearEntrenador.visibility = View.INVISIBLE
+            btnListarEntrenador.visibility = View.INVISIBLE
             irActividadDelivery()
 
         }else{
@@ -41,6 +45,10 @@ class RegistrarPersonajes : AppCompatActivity() {
 
         btnListarEntrenador.setOnClickListener { v: View? ->
             irListarEntrenadorActivity()
+        }
+
+        btnBuscarEntrenador.setOnClickListener { v: View? ->
+            irBuscarEntrenadorActivity()
         }
 
 
@@ -58,7 +66,13 @@ class RegistrarPersonajes : AppCompatActivity() {
     }
 
     fun irActividadDelivery(){
-        val intent = Intent(this,   DeliveryActivity::class.java)
+        val intent = Intent(this,DeliveryActivity::class.java)
+        startActivity(intent)
+
+    }
+
+    fun irBuscarEntrenadorActivity(){
+        val intent = Intent(this,BuscarEntrenadorActivity::class.java)
         startActivity(intent)
 
     }

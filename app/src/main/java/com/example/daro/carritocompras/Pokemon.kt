@@ -3,7 +3,7 @@ package com.example.daro.carritocompras
 import android.os.Parcel
 import android.os.Parcelable
 
-class Pokemon(var id: Int, var numeroPokemon: Int, var nombre: String, var poderUno: String, var poderDos: String, var fechaCaptura: String,var nivel: Int,var idEntrenador:Int,  var createdAt: Long,
+class Pokemon(var id: Int, var numeroPokemon: Int, var nombre: String, var poderUno: String, var poderDos: String, var fechaCaptura: String,var nivel: Int,var imagenPokemon:String,var idEntrenador:Int,  var createdAt: Long,
               var updatedAt: Long) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readInt(),
@@ -13,6 +13,7 @@ class Pokemon(var id: Int, var numeroPokemon: Int, var nombre: String, var poder
             parcel.readString(),
             parcel.readString(),
             parcel.readInt(),
+            parcel.readString(),
             parcel.readInt(),
             parcel.readLong(),
             parcel.readLong()) {
@@ -26,6 +27,7 @@ class Pokemon(var id: Int, var numeroPokemon: Int, var nombre: String, var poder
         parcel.writeString(poderDos)
         parcel.writeString(fechaCaptura)
         parcel.writeInt(nivel)
+        parcel.writeString(imagenPokemon)
         parcel.writeInt(idEntrenador)
         parcel.writeLong(createdAt)
         parcel.writeLong(updatedAt)

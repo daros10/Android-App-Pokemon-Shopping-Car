@@ -1,17 +1,17 @@
 package com.example.daro.carritocompras
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_detalles_entrenador.*
+import android.util.Base64
 import kotlinx.android.synthetic.main.activity_detalles_pokemon.*
-import kotlinx.android.synthetic.main.activity_pokemon.*
-import kotlinx.android.synthetic.main.activity_registrar_personajes.*
+
 
 class DetallesPokemonActivity : AppCompatActivity() {
 
     var pokemon: Pokemon? = null
+    lateinit var myBitmapAgain:Bitmap
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +28,14 @@ class DetallesPokemonActivity : AppCompatActivity() {
         txtShowFechaC.text = pokemon?.fechaCaptura
         txtShowNivel.text = pokemon?.nivel.toString()
 
+        myBitmapAgain = decodeBase64(pokemon?.imagenPokemon.toString()!!)
+        showImageViewPokemon.setImageBitmap(myBitmapAgain)
+
+    }
+
+    fun decodeBase64(input: String): Bitmap {
+        val decodedBytes =  Base64.decode(input,0)
+        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
     }
 
 

@@ -6,7 +6,7 @@ import android.view.*
 import android.widget.Button
 import android.widget.TextView
 
-class EntrenadorAdapter(private val entrenadorList: List<Entrenador>) :  RecyclerView.Adapter<EntrenadorAdapter.MyViewHolder>(){
+class OrdenesPendientesAdaptador(private val ordenesList: List<OrdenCompra>) :  RecyclerView.Adapter<OrdenesPendientesAdaptador.MyViewHolder>(){
 
     private var position: Int = 0
 
@@ -20,25 +20,25 @@ class EntrenadorAdapter(private val entrenadorList: List<Entrenador>) :  Recycle
 
     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnCreateContextMenuListener {
 
-        var nombre: TextView
-        var apellido : TextView
-        var fechaNacimiento: TextView
+        var cedula: TextView
+        var sector : TextView
+        var idPokemon: TextView
         var detalles: Button
 
-        lateinit var entrenador: Entrenador
+        lateinit var ordenn: OrdenCompra
 
         init {
-            nombre = view.findViewById(R.id.txtNombreEntrenador) as TextView
-            apellido = view.findViewById(R.id.txtApellidoEntrenador) as TextView
-            fechaNacimiento = view.findViewById(R.id.txtFechaNacimientoEntrenador) as TextView
+            cedula = view.findViewById(R.id.txtNombreEntrenador) as TextView
+            sector = view.findViewById(R.id.txtApellidoEntrenador) as TextView
+            idPokemon = view.findViewById(R.id.txtFechaNacimientoEntrenador) as TextView
             detalles = view.findViewById(R.id.btnDetallesEntrenado) as Button
             view.setOnCreateContextMenuListener(this)
         }
 
         override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
-           /*menu?.add(Menu.NONE, R.id.item_menu_compartir, Menu.NONE, R.string.menu_share)*/
-            menu?.add(Menu.NONE, R.id.item_menu_editar, Menu.NONE, "Editar")
-            menu?.add(Menu.NONE, R.id.item_menu_eliminar, Menu.NONE, "Eliminar")
+            /*menu?.add(Menu.NONE, R.id.item_menu_compartir, Menu.NONE, R.string.menu_share)*/
+            //menu?.add(Menu.NONE, R.id.item_menu_editar, Menu.NONE, "Editar")
+            //menu?.add(Menu.NONE, R.id.item_menu_eliminar, Menu.NONE, "Eliminar")
         }
     }
 
@@ -51,15 +51,15 @@ class EntrenadorAdapter(private val entrenadorList: List<Entrenador>) :  Recycle
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val entrenador = entrenadorList[position]
-        holder.nombre.text = entrenador.nombre
-        holder.apellido.text = entrenador.apellido
-        holder.fechaNacimiento.text = entrenador.fechaNacimiento
-        holder.entrenador = entrenador
+        val orden = ordenesList[position]
+        holder.cedula.text = orden.cedulaComprador.toString()
+        holder.sector.text = orden.sector
+        holder.idPokemon.text = orden.idPokemon.toString()
+        holder.ordenn = orden
         holder.detalles.setOnClickListener{
             v: View ->
-            val intent = Intent(v.context, DetallesEntrenadorActivity::class.java)
-            intent.putExtra("detallesEntrenador", entrenador)
+            val intent = Intent(v.context, DetalleOrdenActivity::class.java)
+            intent.putExtra("detallesOrden", orden)
 
             v.context.startActivity(intent)
         }
@@ -70,7 +70,7 @@ class EntrenadorAdapter(private val entrenadorList: List<Entrenador>) :  Recycle
     }
 
     override fun getItemCount(): Int {
-        return entrenadorList.size
+        return ordenesList.size
     }
 
 

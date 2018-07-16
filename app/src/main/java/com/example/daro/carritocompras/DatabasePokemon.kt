@@ -14,7 +14,7 @@ class DatabasePokemon{
     companion object {
 
         fun insertarPokemon(pokemon:Pokemon){
-            "http://192.168.0.3:1337/Pokemon".httpPost(listOf("numero" to pokemon.numeroPokemon, "nombre" to pokemon.nombre, "poderUno" to pokemon.poderUno, "poderDos" to pokemon.poderDos, "fechaCaptura" to pokemon.fechaCaptura,"nivel" to pokemon.nivel,"entrenadorId" to pokemon.idEntrenador ))
+            "http://192.168.0.3:1337/Pokemon".httpPost(listOf("numero" to pokemon.numeroPokemon, "nombre" to pokemon.nombre, "poderUno" to pokemon.poderUno, "poderDos" to pokemon.poderDos, "fechaCaptura" to pokemon.fechaCaptura,"nivel" to pokemon.nivel,"imagenPokemon" to pokemon.imagenPokemon,"entrenadorId" to pokemon.idEntrenador ))
                     .responseString { request, _, result ->
                         Log.d("http-ejemplo", request.toString())
                     }
@@ -53,13 +53,17 @@ class DatabasePokemon{
                 val poderDos = it["poderDos"] as String
                 val fechaCaptura = it["fechaCaptura"] as String
                 val nivel = it["nivel"] as Int
+                val imagenPokemon = it["imagenPokemon"] as String
                 //val latitud = it["latitud"] as Double
                // val longitud = it["longitud"] as Double
-                val pokemoon = Pokemon(id,numero,nombre,poderUno,poderDos,fechaCaptura,nivel,entrenadorId,0,0)
+                val pokemoon = Pokemon(id,numero,nombre,poderUno,poderDos,fechaCaptura,nivel,imagenPokemon,entrenadorId,0,0)
                 pokemon.add(pokemoon)
             }
             return pokemon
         }
+
+
+
 
     }
 }

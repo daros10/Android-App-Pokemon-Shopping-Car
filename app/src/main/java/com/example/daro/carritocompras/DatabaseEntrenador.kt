@@ -56,5 +56,29 @@ class DatabaseEntrenador{
             return entrenadores
         }
 
+        fun buscarEntrenador(nombre:String): ArrayList<Entrenador> {
+            val entrenadores: ArrayList<Entrenador> = ArrayList()
+            val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+            StrictMode.setThreadPolicy(policy)
+            val (request, response, result) = "http://192.168.0.3:1337/Entrenador?nombre=${nombre}".httpGet().responseString()
+            val jsonStringAutor = result.get()
+
+            val parser = Parser()
+            val stringBuilder = StringBuilder(jsonStringAutor)
+            val array = parser.parse(stringBuilder) as JsonArray<JsonObject>
+
+            array.forEach {
+                val id = it["id"] as Int
+                val nombre = it["nombre"] as String
+                val apellido = it["apellido"] as String
+                val fechaNacimiento = it["fechaNacimiento"] as String
+                val numeroMedallas = it["medallas"] as Int
+                val campeonActual = it["campeonActual"] as Int
+                val entrenador = Entrenador(id, nombre, apellido, fechaNacimiento, numeroMedallas, campeonActual, 0, 0)
+                entrenadores.add(entrenador)
+            }
+            return entrenadores
+        }
+
     }
 }

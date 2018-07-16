@@ -6,7 +6,7 @@ import android.view.*
 import android.widget.Button
 import android.widget.TextView
 
-class EntrenadorAdapter(private val entrenadorList: List<Entrenador>) :  RecyclerView.Adapter<EntrenadorAdapter.MyViewHolder>(){
+class EntrenadorClienteAdapter(private val entrenadorList: List<Entrenador>) :  RecyclerView.Adapter<EntrenadorClienteAdapter.MyViewHolder>(){
 
     private var position: Int = 0
 
@@ -36,9 +36,9 @@ class EntrenadorAdapter(private val entrenadorList: List<Entrenador>) :  Recycle
         }
 
         override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
-           /*menu?.add(Menu.NONE, R.id.item_menu_compartir, Menu.NONE, R.string.menu_share)*/
-            menu?.add(Menu.NONE, R.id.item_menu_editar, Menu.NONE, "Editar")
-            menu?.add(Menu.NONE, R.id.item_menu_eliminar, Menu.NONE, "Eliminar")
+            /*menu?.add(Menu.NONE, R.id.item_menu_compartir, Menu.NONE, R.string.menu_share)*/
+            //menu?.add(Menu.NONE, R.id.item_menu_editar, Menu.NONE, "Editar")
+            //menu?.add(Menu.NONE, R.id.item_menu_eliminar, Menu.NONE, "Eliminar")
         }
     }
 
@@ -58,8 +58,8 @@ class EntrenadorAdapter(private val entrenadorList: List<Entrenador>) :  Recycle
         holder.entrenador = entrenador
         holder.detalles.setOnClickListener{
             v: View ->
-            val intent = Intent(v.context, DetallesEntrenadorActivity::class.java)
-            intent.putExtra("detallesEntrenador", entrenador)
+            val intent = Intent(v.context, DetallesEntrenadorClienteActivity::class.java)
+            intent.putExtra("detallesEntrenadorCliente", entrenador)
 
             v.context.startActivity(intent)
         }

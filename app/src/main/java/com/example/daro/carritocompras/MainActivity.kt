@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.onesignal.OneSignal
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +21,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        OneSignal.setLogLevel(OneSignal.LOG_LEVEL.DEBUG, OneSignal.LOG_LEVEL.DEBUG)
 
         btn_login.setOnClickListener { v: View? ->
             irActividadRgistrar()
@@ -48,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        Toast.makeText(this,"VALOR: $estadoIngresoSistema",Toast.LENGTH_SHORT).show()
+        ///Toast.makeText(this,"VALOR: $estadoIngresoSistema",Toast.LENGTH_SHORT).show()
 
         if (estadoIngresoSistema==1){
             Toast.makeText(this,"Bienvenido al Sistema: $usuarioActual",Toast.LENGTH_SHORT).show()
